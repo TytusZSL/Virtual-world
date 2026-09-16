@@ -7,9 +7,21 @@ namespace Virtual_world.GameWorld.Environment
 {
     internal class World
     {
+        public World(int X, int Y)
+        {
+            SizeX = X;
+            SizeY = Y;
+            TileSet = new Organism?[SizeX, SizeY];
+            WorldSingleton = this;
+        }
         public void DoTurn() { }
         public void DrawWorld() { }
 
-        Organism[,] TileSet = new Organism[20, 20];
+        public readonly int SizeX;
+        public readonly int SizeY;
+
+        public static World WorldSingleton = new World(20, 20);
+
+        public Organism?[,] TileSet;
     }
 }
