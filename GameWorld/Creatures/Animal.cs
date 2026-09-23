@@ -15,10 +15,10 @@ namespace Virtual_world.GameWorld.Creatures
 
         public override string GraphicSrc => ImageManager.AnimalImages[this.Id];
 
-        public override void Action(World world)
+        public override void Action()
         {
-            base.Action(world);
-            List<Organism?> adjacentTiles = GetAdjacentTiles(world);
+            base.Action();
+            List<Organism?> adjacentTiles = GetAdjacentTiles();
         }
     }
 }

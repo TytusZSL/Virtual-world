@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Virtual_world.StartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Virtual_world.ViewModels"
+    Title="StartPage"
+    x:DataType="vm:StartViewModel">
+    <Grid
+        ColumnDefinitions="Auto, Auto, *"
+        ColumnSpacing="10"
+        RowDefinitions="Auto, Auto, Auto, Auto"
+        RowSpacing="10">
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalOptions="Center"
+            Text="Opcje gry"
+            VerticalOptions="Center" />
+        <Label Grid.Row="1" Grid.Column="0">X:</Label>
+        <Label
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="{Binding WorldSizeX}" />
+        <Slider
+            Grid.Row="1"
+            Grid.Column="2"
+            Maximum="30"
+            Minimum="1"
+            Value="{Binding WorldSizeX}" />
+        <Label Grid.Row="2" Grid.Column="0">Y:</Label>
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="{Binding WorldSizeY}" />
+        <Slider
+            Grid.Row="2"
+            Grid.Column="2"
+            Maximum="30"
+            Minimum="1"
+            Value="{Binding WorldSizeY}" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Command="{Binding StartGameCommand}"
+            Text="Start!" />
+    </Grid>
+</ContentPage>

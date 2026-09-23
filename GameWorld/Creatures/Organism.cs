@@ -5,7 +5,7 @@ using Virtual_world.GameWorld.Environment;
 
 namespace Virtual_world.GameWorld.Creatures
 {
-    internal abstract class Organism
+    public abstract class Organism
     {
         protected Organism(int X, int Y)
         {
@@ -26,7 +26,7 @@ namespace Virtual_world.GameWorld.Creatures
         public abstract string GraphicSrc { get; }
         public double SpawnRate;
 
-        public virtual void Action(World world)
+        public virtual void Action()
         {
             Age++;
         }
@@ -40,7 +40,7 @@ namespace Virtual_world.GameWorld.Creatures
             {
                 for (int y = this.Y - 1; y <= this.Y + 1; y++)
                 {
-                    result.Add(World.WorldSingleton.TileSet[x, y]);
+                    result.Add(World.Singleton.TileSet[x, y]);
                 }
             }
             return result;

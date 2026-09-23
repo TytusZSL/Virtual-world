@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Virtual_world.GameWorld.Environment;
+using Virtual_world.GameWorld.Graphics;
+using Virtual_world.ViewModels;
 
 namespace Virtual_world
 {
@@ -18,6 +21,8 @@ namespace Virtual_world
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddTransient<DisplayWorld>();
+            builder.Services.AddTransient<StartViewModel>();
 
             return builder.Build();
         }
