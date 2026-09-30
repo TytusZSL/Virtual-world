@@ -10,6 +10,7 @@
         <CollectionView
             BackgroundColor="Gray"
             ItemsSource="{Binding Tiles}"
+            HeightRequest="{Binding ExpectedWorldWidth}"
             WidthRequest="{Binding ExpectedWorldWidth}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -28,6 +29,7 @@
                 <GridItemsLayout Orientation="Vertical" Span="{Binding WorldWidth}" />
             </CollectionView.ItemsLayout>
         </CollectionView>
+        <Button Text="Do turn" Command="{Binding DoTurnCommand}"/>
     </VerticalStackLayout>
 
 </ContentPage>

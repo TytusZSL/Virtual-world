@@ -10,16 +10,13 @@ namespace Virtual_world.ViewModels
     public partial class StartViewModel() : ObservableObject
     {
         [ObservableProperty]
-        int _worldSizeX = 20;
-
-        [ObservableProperty]
-        int _WorldSizeY = 20;
+        public partial int WorldSize { get; set; } = 20;
 
         [RelayCommand]
         public async Task StartGame()
         {
             await Shell.Current.GoToAsync("GamePage");
-            new World(WorldSizeX, WorldSizeY);
+            new World(WorldSize);
         }
     }
 }

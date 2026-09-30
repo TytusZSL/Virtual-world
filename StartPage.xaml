@@ -22,24 +22,13 @@
         <Label
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding WorldSizeX}" />
+            Text="{Binding WorldSize}" />
         <Slider
             Grid.Row="1"
             Grid.Column="2"
             Maximum="30"
             Minimum="1"
-            Value="{Binding WorldSizeX}" />
-        <Label Grid.Row="2" Grid.Column="0">Y:</Label>
-        <Label
-            Grid.Row="2"
-            Grid.Column="1"
-            Text="{Binding WorldSizeY}" />
-        <Slider
-            Grid.Row="2"
-            Grid.Column="2"
-            Maximum="30"
-            Minimum="1"
-            Value="{Binding WorldSizeY}" />
+            Value="{Binding WorldSize}" />
         <Button
             Grid.Row="3"
             Grid.Column="0"

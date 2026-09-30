@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using Virtual_world.GameWorld.Creatures;
+using Virtual_world.GameWorld.Environment;
 
 namespace Virtual_world.GameWorld.Graphics
 {
     public class DisplayableTile
     {
-        public DisplayableTile(Organism? organism)
+        public DisplayableTile(Tile Tile)
         {
-            this.organism = organism;
+            this.Tile = Tile;
         }
-        private Organism? organism;
+        private Tile Tile;
 
-        public string GraphicSrc => organism?.GraphicSrc ?? "none.png";
+        public string GraphicSrc => Tile.Content?.GraphicSrc ?? "none.png";
     }
 }

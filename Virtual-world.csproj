@@ -71,10 +71,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Compile Update="GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
 	  </Compile>
