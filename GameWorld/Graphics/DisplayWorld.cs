@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Threading.Tasks;
 using Virtual_world.GameWorld.Creatures;
 using Virtual_world.GameWorld.Creatures.Animals;
 using Virtual_world.GameWorld.Creatures.Plants;
@@ -151,14 +152,17 @@ namespace Virtual_world.GameWorld.Graphics
             var world = World.Singleton;
             RefreshTrackedSelection(world);
 
-            for (int x = 0; x < world.Size; x++)
+            var size = world.Size;
+            var hasSelection = HasSelection;
+            var selectedX = _selectedX;
+            var selectedY = _selectedY;
+            Parallel.For(0L, (long)size * size, index =>
             {
-                for (int y = 0; y < world.Size; y++)
-                {
-                    var isSelected = HasSelection && _selectedX == x && _selectedY == y;
-                    TileRows[x][y].UpdateTile(world.TileSet[x, y], isSelected);
-                }
-            }
+                var x = (int)(index / size);
+                var y = (int)(index % size);
+                var isSelected = hasSelection && selectedX == x && selectedY == y;
+                TileRows[x][y].UpdateTile(world.TileSet[x, y], isSelected);
+            });
 
             var narratorMessages = world.NarratorMessages;
             if (!ReferenceEquals(_narratorMessagesSource, narratorMessages)
