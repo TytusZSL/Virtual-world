@@ -45,7 +45,7 @@ namespace Virtual_world.GameWorld.Creatures
             if (_age > 100 || _age > Health + _lifespanVariation)
             {
                 MarkDead(World.Singleton);
-                World.Singleton.AddNarratorMessage($"{Name} zmarł ze starości.");
+                World.Singleton.AddNarratorMessage($"{Name} zmarł ze starości.", Graphics.EntryType.Death);
             }
         }
 

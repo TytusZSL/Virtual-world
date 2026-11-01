@@ -7,6 +7,41 @@
     Title="Actions"
     x:DataType="wrld:DisplayWorld">
 
-    <Button Grid.Row="1" Text="Do turn" Command="{Binding DoTurnCommand}" />
+    <Grid RowDefinitions="Auto, Auto, *, Auto, Auto" ColumnDefinitions="*" Padding="10">
+        <Label Grid.Row="0" Margin="0, 15">Wykonał: Tytus Barański Numer: 2</Label>
+        <Label Grid.Row="1" FontAttributes="Bold" FontSize="12" Text="Wiadomości narratora" />
+        <CollectionView Grid.Row="2" ItemsUpdatingScrollMode="KeepLastItemInView" ItemsSource="{Binding NarratorMessages}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="wrld:NarratorEntry">
+                    <Label Text="{Binding EntryText}"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <VerticalStackLayout Grid.Row="3" Spacing="0">
+            <Grid ColumnDefinitions="*, *, *, *, *">
+                <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="0">
+                    <CheckBox IsChecked="{Binding ShowDeathMessages}" SemanticProperties.Description="Show death messages" />
+                    <Label FontSize="11" Text="Smierć" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="0">
+                    <CheckBox IsChecked="{Binding ShowConsumeMessages}" SemanticProperties.Description="Show consume messages" />
+                    <Label FontSize="11" Text="Zjedzenia" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="0">
+                    <CheckBox IsChecked="{Binding ShowFightMessages}" SemanticProperties.Description="Show fight messages" />
+                    <Label FontSize="11" Text="Walki" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="0">
+                    <CheckBox IsChecked="{Binding ShowBreedMessages}" SemanticProperties.Description="Show breed messages" />
+                    <Label FontSize="11" Text="Rodzicielstwo" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="0">
+                    <CheckBox IsChecked="{Binding ShowWorldMessages}" SemanticProperties.Description="Show world messages" />
+                    <Label FontSize="11" Text="Świat" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+        <Button Grid.Row="4" Text="Do turn" Command="{Binding DoTurnCommand}" />
+    </Grid>
 
 </ContentPage>

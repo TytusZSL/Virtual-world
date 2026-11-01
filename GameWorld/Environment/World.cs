@@ -51,18 +51,18 @@ namespace Virtual_world.GameWorld.Environment
                 organism.Action();
             }
 
-            DisplayWorld.Singleton.UpdateTiles();
+            DisplayWorld.Singleton.Update();
         }
 
         public void DrawWorld() { }
 
-        public List<string> NarratorMessages { get; } = new();
+        public List<NarratorEntry> NarratorMessages { get; } = new();
 
-        public void AddNarratorMessage(string message)
+        public void AddNarratorMessage(string message, EntryType type)
         {
             if (!string.IsNullOrWhiteSpace(message))
             {
-                NarratorMessages.Add(message);
+                NarratorMessages.Add(new(message, type));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Virtual_world.GameWorld.Environment
                 }
             }
 
-            AddNarratorMessage("Początek świata: wygenerowano organizmy na losowych polach.");
+            AddNarratorMessage("Początek świata: wygenerowano organizmy na losowych polach.", EntryType.World);
         }
 
         public bool AddOrganism(Organism organism)

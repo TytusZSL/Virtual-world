@@ -81,7 +81,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
             if (Health <= 0)
                 MarkDead(world);
 
-            world.AddNarratorMessage($"{Name} zjadł {plant.Name}.");
+            world.AddNarratorMessage($"{Name} zjadł {plant.Name}.", EntryType.Consume);
         }
 
         private bool TryReproduce(World world, Animal partner)
@@ -100,7 +100,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
 
             newborn.Mutation(this, world);
             childTile.Content = newborn;
-            world.AddNarratorMessage($"{Name} i {partner.Name} wydali na świat potomka.");
+            world.AddNarratorMessage($"{Name} i {partner.Name} wydali na świat potomka.", EntryType.Breed);
             return true;
         }
 
@@ -134,7 +134,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
                 attacker._y = defender.Y;
                 if (attacker.IsCarnivore)
                     attacker.ChangeHealth(5);
-                world.AddNarratorMessage($"{attacker.Name} pokonał {defender.Name}.");
+                world.AddNarratorMessage($"{attacker.Name} pokonał {defender.Name}.", EntryType.Fight);
                 return;
             }
 
@@ -147,7 +147,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
                 defender._y = attacker.Y;
                 if (defender.IsCarnivore)
                     defender.ChangeHealth(5);
-                world.AddNarratorMessage($"{defender.Name} pokonał {attacker.Name}.");
+                world.AddNarratorMessage($"{defender.Name} pokonał {attacker.Name}.", EntryType.Fight);
                 return;
             }
         }

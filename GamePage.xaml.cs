@@ -41,8 +41,8 @@ namespace Virtual_world
 
             _actionsWindow = new Window(new ActionsPage((DisplayWorld)BindingContext))
             {
-                Width = 400,
-                Height = 620
+                Width = 600,
+                Height = 800
             };
             _actionsWindow.Destroying += OnActionsWindowDestroying;
             application.OpenWindow(_actionsWindow);
