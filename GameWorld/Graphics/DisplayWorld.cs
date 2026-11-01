@@ -23,7 +23,7 @@ namespace Virtual_world.GameWorld.Graphics
         public ObservableCollection<NarratorEntry> NarratorMessages { get; } = new();
         public ObservableCollection<string> OrganismTypes { get; } = new()
         {
-            "Wilk", "Owca", "Lis", "Mysz", "Trawa", "Mlecz", "Cierń"
+            "Wilk", "Owca", "Lis", "Mysz", "Słoń", "Trawa", "Mlecz", "Cierń", "Róża"
         };
 
         private int? _selectedX;
@@ -258,9 +258,11 @@ namespace Virtual_world.GameWorld.Graphics
                 "Owca" => new Sheep(x, y),
                 "Lis" => new Fox(x, y),
                 "Mysz" => new Mouse(x, y),
+                "Słoń" => new Elephant(x, y),
                 "Trawa" => new Grass(x, y),
                 "Mlecz" => new Dandelion(x, y),
                 "Cierń" => new Thorn(x, y),
+                "Róża" => new Rose(x, y),
                 _ => throw new InvalidOperationException($"Nieznany rodzaj organizmu: {SelectedSpecies}.")
             };
 

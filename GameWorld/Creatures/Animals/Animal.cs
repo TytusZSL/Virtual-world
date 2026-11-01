@@ -55,6 +55,8 @@ namespace Virtual_world.GameWorld.Creatures.Animals
             {
                 if (other.GetType() == GetType())
                     TryReproduce(world, otherAnimal);
+                else if (otherAnimal.AutomaticallyDefeats(this))
+                    otherAnimal.Collision(world, this);
                 else
                     ResolveFight(world, otherAnimal);
                 return;
@@ -83,6 +85,8 @@ namespace Virtual_world.GameWorld.Creatures.Animals
 
             world.AddNarratorMessage($"{Name} zjadł {plant.Name}.", EntryType.Consume);
         }
+
+        internal void IncreaseStrengthByOne() => Strength += 1;
 
         private bool TryReproduce(World world, Animal partner)
         {
@@ -127,30 +131,34 @@ namespace Virtual_world.GameWorld.Creatures.Animals
 
             if (defender.Health <= 0)
             {
-                defender.MarkDead(world);
-                world.TileSet[defender.X, defender.Y].Content = attacker;
-                world.TileSet[attacker.X, attacker.Y].Content = null;
-                attacker._x = defender.X;
-                attacker._y = defender.Y;
-                if (attacker.IsCarnivore)
-                    attacker.ChangeHealth(5);
+                attacker.MoveToDefeatedAnimalTile(world, defender);
                 world.AddNarratorMessage($"{attacker.Name} pokonał {defender.Name}.", EntryType.Fight);
                 return;
             }
 
             if (attacker.Health <= 0)
             {
-                attacker.MarkDead(world);
-                world.TileSet[attacker.X, attacker.Y].Content = defender;
-                world.TileSet[defender.X, defender.Y].Content = null;
-                defender._x = attacker.X;
-                defender._y = attacker.Y;
-                if (defender.IsCarnivore)
-                    defender.ChangeHealth(5);
+                defender.MoveToDefeatedAnimalTile(world, attacker);
                 world.AddNarratorMessage($"{defender.Name} pokonał {attacker.Name}.", EntryType.Fight);
                 return;
             }
         }
+
+        protected void MoveToDefeatedAnimalTile(World world, Animal defeated)
+        {
+            var defeatedX = defeated.X;
+            var defeatedY = defeated.Y;
+            defeated.MarkDead(world);
+            world.TileSet[X, Y].Content = null;
+            world.TileSet[defeatedX, defeatedY].Content = this;
+            _x = defeatedX;
+            _y = defeatedY;
+
+            if (IsCarnivore)
+                ChangeHealth(5);
+        }
+
+        internal virtual bool AutomaticallyDefeats(Animal otherAnimal) => false;
 
         protected virtual bool ShouldAvoidAnimal(Animal otherAnimal) => false;
 

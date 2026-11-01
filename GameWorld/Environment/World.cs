@@ -74,9 +74,11 @@ namespace Virtual_world.GameWorld.Environment
                 ((x, y) => new Sheep(x, y), Sheep.SpawnRate),
                 ((x, y) => new Fox(x, y), Fox.SpawnRate),
                 ((x, y) => new Mouse(x, y), Mouse.SpawnRate),
+                ((x, y) => new Elephant(x, y), Elephant.SpawnRate),
                 ((x, y) => new Grass(x, y), Grass.SpawnRate),
                 ((x, y) => new Dandelion(x, y), Dandelion.SpawnRate),
-                ((x, y) => new Thorn(x, y), Thorn.SpawnRate)
+                ((x, y) => new Thorn(x, y), Thorn.SpawnRate),
+                ((x, y) => new Rose(x, y), Rose.SpawnRate)
             };
             var rowColumnFactor = Math.Floor(Math.Sqrt(TileSet.Length));
             var populations = species
