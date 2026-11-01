@@ -152,6 +152,8 @@ namespace Virtual_world.GameWorld.Creatures.Animals
             }
         }
 
+        protected virtual bool ShouldAvoidAnimal(Animal otherAnimal) => false;
+
         private void TryMoveTo(Tile target)
         {
             if (target == null)
@@ -163,7 +165,8 @@ namespace Virtual_world.GameWorld.Creatures.Animals
                 return;
             }
 
-            if (target.Content is Animal otherAnimal && otherAnimal.GetType() == GetType())
+            if (target.Content is Animal otherAnimal
+                && (otherAnimal.GetType() == GetType() || ShouldAvoidAnimal(otherAnimal)))
                 return;
 
             if (target.Content != null)

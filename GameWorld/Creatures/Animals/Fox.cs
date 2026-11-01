@@ -18,10 +18,11 @@ namespace Virtual_world.GameWorld.Creatures.Animals
         public override double Health { get; protected set; }
         public override bool IsCarnivore => true;
         public override string Name { get; protected set; } = "lis";
-        public override int Agility { get; protected set; }
+        public override int Agility { get; protected set; } = 11;
         public override int Id => 3;
         public override double ReproductionChance { get; protected set; }
         public override string GraphicSrc => "lis.png";
+        protected override bool ShouldAvoidAnimal(Animal otherAnimal) => otherAnimal.Strength > Strength;
         public override void Collision(World world, Organism other) => base.Collision(world, other);
     }
 }

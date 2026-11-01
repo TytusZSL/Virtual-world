@@ -17,7 +17,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
         public override int Initiative { get; protected set; } = 6;
         public override double Health { get; protected set; }
         public override string Name { get; protected set; } = "mysz";
-        public override int Agility { get; protected set; }
+        public override int Agility { get; protected set; } = 12;
         public override int Id => 10;
         public override double ReproductionChance { get; protected set; }
         public override string GraphicSrc => "mysz.png";
