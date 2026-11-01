@@ -18,6 +18,12 @@ namespace Virtual_world
             BindingContext = vm;
         }
 
+        private void OnTileClicked(object? sender, EventArgs e)
+        {
+            if (sender is Button { CommandParameter: DisplayableTile tile })
+                ((DisplayWorld)BindingContext).SelectTile(tile);
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -42,7 +48,7 @@ namespace Virtual_world
             _actionsWindow = new Window(new ActionsPage((DisplayWorld)BindingContext))
             {
                 Width = 600,
-                Height = 800
+                Height = 1000
             };
             _actionsWindow.Destroying += OnActionsWindowDestroying;
             application.OpenWindow(_actionsWindow);

@@ -7,41 +7,103 @@
     Title="Actions"
     x:DataType="wrld:DisplayWorld">
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto, Auto" ColumnDefinitions="*" Padding="10">
-        <Label Grid.Row="0" Margin="0, 15">Wykonał: Tytus Barański Numer: 2</Label>
-        <Label Grid.Row="1" FontAttributes="Bold" FontSize="12" Text="Wiadomości narratora" />
-        <CollectionView Grid.Row="2" ItemsUpdatingScrollMode="KeepLastItemInView" ItemsSource="{Binding NarratorMessages}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="wrld:NarratorEntry">
-                    <Label Text="{Binding EntryText}"/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+    <Grid RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="*" Padding="10" RowSpacing="6">
+        <Label Grid.Row="0" Margin="0, 8">Wykonał: Tytus Barański Numer: 2</Label>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="6">
+                <Label FontAttributes="Bold" Text="{Binding SelectionPositionText}" />
+                <Label Text="{Binding SelectionMessage}" />
+                <VerticalStackLayout IsVisible="{Binding CanEditSelectedTile}" Spacing="6">
+                    <VerticalStackLayout IsVisible="{Binding CanAddOrganismToSelectedTile}" Spacing="6">
+                        <Picker Title="Wybierz organizm" ItemsSource="{Binding OrganismTypes}" SelectedItem="{Binding SelectedSpecies}" />
+                        <Button Text="Dodaj na wybrane pole" Command="{Binding AddOrganismToSelectedTileCommand}" />
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="6" IsVisible="{Binding CanManageOrganismOnSelectedTile}">
+                        <Button Grid.Column="0" Text="Edytuj organizm" Command="{Binding EditOrganismOnSelectedTileCommand}" />
+                        <Button Grid.Column="1" Text="Usuń organizm" Command="{Binding RemoveOrganismFromSelectedTileCommand}" />
+                    </Grid>
+                </VerticalStackLayout>
+                <VerticalStackLayout IsVisible="{Binding IsTrackingOrganism}" Spacing="6">
+                    <Label FontAttributes="Bold" Text="Edycja śledzonego organizmu" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="4">
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="0">
+                            <Label Text="Nazwa" />
+                            <Entry Text="{Binding EditName}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="0">
+                            <Label Text="Wiek" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditAge}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="0">
+                            <Label Text="Zdrowie" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditHealth}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="0">
+                            <Label Text="Prędkość" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditSpeed}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="4" IsVisible="{Binding IsSelectedAnimal}">
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="0">
+                            <Label Text="Siła" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditStrength}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="0">
+                            <Label Text="Inicjatywa" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditInitiative}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="0">
+                            <Label Text="Zwinność (0–100)" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditAgility}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="0">
+                            <Label Text="Szansa rozmnożenia (0–5)" />
+                            <Entry Keyboard="Numeric" Text="{Binding EditReproductionChance}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+                        <Button Grid.Column="0" Text="Zapisz zmiany" Command="{Binding SaveOrganismChangesCommand}" />
+                        <Button Grid.Column="1" Text="Powrót do pola" Command="{Binding ReturnToTrackedOrganismTileCommand}" />
+                    </Grid>
+                    <Button Text="Usuń śledzony organizm" Command="{Binding RemoveTrackedOrganismCommand}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" RowSpacing="2">
+            <Label Grid.Row="0" FontAttributes="Bold" FontSize="12" Text="Wiadomości narratora" />
+            <CollectionView Grid.Row="1" ItemsUpdatingScrollMode="KeepLastItemInView" ItemsSource="{Binding NarratorMessages}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="wrld:NarratorEntry">
+                        <Label Text="{Binding EntryText}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
         <VerticalStackLayout Grid.Row="3" Spacing="0">
-            <Grid ColumnDefinitions="*, *, *, *, *">
+            <Grid ColumnDefinitions="*,*,*,*,*">
                 <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="0">
-                    <CheckBox IsChecked="{Binding ShowDeathMessages}" SemanticProperties.Description="Show death messages" />
-                    <Label FontSize="11" Text="Smierć" VerticalTextAlignment="Center" />
+                    <CheckBox IsChecked="{Binding ShowDeathMessages}" SemanticProperties.Description="Pokaż informacje o śmierci" />
+                    <Label FontSize="11" Text="Śmierć" VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="0">
-                    <CheckBox IsChecked="{Binding ShowConsumeMessages}" SemanticProperties.Description="Show consume messages" />
+                    <CheckBox IsChecked="{Binding ShowConsumeMessages}" SemanticProperties.Description="Pokaż informacje o zjedzeniu" />
                     <Label FontSize="11" Text="Zjedzenia" VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="0">
-                    <CheckBox IsChecked="{Binding ShowFightMessages}" SemanticProperties.Description="Show fight messages" />
+                    <CheckBox IsChecked="{Binding ShowFightMessages}" SemanticProperties.Description="Pokaż informacje o walkach" />
                     <Label FontSize="11" Text="Walki" VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="0">
-                    <CheckBox IsChecked="{Binding ShowBreedMessages}" SemanticProperties.Description="Show breed messages" />
-                    <Label FontSize="11" Text="Rodzicielstwo" VerticalTextAlignment="Center" />
+                    <CheckBox IsChecked="{Binding ShowBreedMessages}" SemanticProperties.Description="Pokaż informacje o rozmnażaniu" />
+                    <Label FontSize="11" Text="Rozmnażanie" VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="0">
-                    <CheckBox IsChecked="{Binding ShowWorldMessages}" SemanticProperties.Description="Show world messages" />
+                    <CheckBox IsChecked="{Binding ShowWorldMessages}" SemanticProperties.Description="Pokaż wiadomości o świecie" />
                     <Label FontSize="11" Text="Świat" VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
             </Grid>
+            <Button Text="Wykonaj turę" Command="{Binding DoTurnCommand}" />
         </VerticalStackLayout>
-        <Button Grid.Row="4" Text="Do turn" Command="{Binding DoTurnCommand}" />
     </Grid>
 
 </ContentPage>

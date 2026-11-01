@@ -9,15 +9,12 @@ namespace Virtual_world.GameWorld.Creatures.Animals
     {
         public const double SpawnRate = 0.1;
 
-        private readonly int _initiative = 5;
-        private readonly int _dexterity = 0;
-
         public override double Strength { get; protected set; }
-        public override int Initiative => _initiative;
+        public override int Initiative { get; protected set; } = 5;
         public override double Health { get; protected set; }
         public override bool IsCarnivore => true;
-        public override string Name => "wilk";
-        public override int Agility => _dexterity;
+        public override string Name { get; protected set; } = "wilk";
+        public override int Agility { get; protected set; }
         public override int Id => 1;
         public override double ReproductionChance { get; protected set; }
         public override string GraphicSrc => "wilk.png";

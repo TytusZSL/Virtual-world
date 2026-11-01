@@ -8,9 +8,6 @@ namespace Virtual_world.GameWorld.Creatures.Plants
     {
         public const double SpawnRate = 0.2;
 
-        private readonly int _initiative = 0;
-        private readonly int _dexterity = 0;
-
         public Thorn(int X, int Y) : base(X, Y)
         {
             Health = 2;
@@ -19,10 +16,10 @@ namespace Virtual_world.GameWorld.Creatures.Plants
         }
 
         public override double Strength { get; protected set; }
-        public override int Initiative => _initiative;
+        public override int Initiative { get; protected set; }
         public override double Health { get; protected set; }
-        public override string Name => "cierń";
-        public override int Agility => _dexterity;
+        public override string Name { get; protected set; } = "cierń";
+        public override int Agility { get; protected set; }
         public override int Id => 2;
         public override double ReproductionChance { get; protected set; }
         public override string GraphicSrc => "ciern.png";

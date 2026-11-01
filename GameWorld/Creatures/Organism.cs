@@ -17,17 +17,17 @@ namespace Virtual_world.GameWorld.Creatures
             _lifespanVariation = World.Singleton.rngGen.Next(-5, 6);
         }
         public abstract double Strength { get; protected set; }
-        public abstract int Initiative { get; }
+        public abstract int Initiative { get; protected set; }
         public int X => _x;
         protected int _x;
         public int Y => _y;
         protected int _y;
         public abstract double Health { get; protected set; }
-        public abstract string Name { get; }
+        public abstract string Name { get; protected set; }
         public int Age => _age;
         private int _age = 0;
         public bool IsAlive { get; private set; } = true;
-        public abstract int Agility { get; }
+        public abstract int Agility { get; protected set; }
         public abstract int Id { get; }
         public abstract double ReproductionChance { get; protected set; }
         public double Speed { get; protected set; } = 1.0;
@@ -62,6 +62,38 @@ namespace Virtual_world.GameWorld.Creatures
         public void ChangeHealth(double amount)
         {
             Health = Math.Max(0, Health + amount);
+        }
+
+        public void UpdateEditableAttributes(string name, int age, double health, double strength, int initiative, int agility, double speed, double reproductionChance)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nazwa organizmu nie może być pusta.", nameof(name));
+            if (age < 0)
+                throw new ArgumentOutOfRangeException(nameof(age), "Wiek nie może być ujemny.");
+            if (!double.IsFinite(health) || health < 0)
+                throw new ArgumentOutOfRangeException(nameof(health), "Zdrowie musi być liczbą nieujemną.");
+            if (!double.IsFinite(strength) || strength < 0)
+                throw new ArgumentOutOfRangeException(nameof(strength), "Siła musi być liczbą nieujemną.");
+            if (initiative < 0)
+                throw new ArgumentOutOfRangeException(nameof(initiative), "Inicjatywa nie może być ujemna.");
+            if (agility < 0 || agility > 100)
+                throw new ArgumentOutOfRangeException(nameof(agility), "Zwinność musi mieścić się w zakresie od 0 do 100.");
+            if (!double.IsFinite(speed) || speed < 1 || speed > 100)
+                throw new ArgumentOutOfRangeException(nameof(speed), "Prędkość musi mieścić się w zakresie od 1 do 100.");
+            if (!double.IsFinite(reproductionChance) || reproductionChance < 0 || reproductionChance > 5)
+                throw new ArgumentOutOfRangeException(nameof(reproductionChance), "Szansa na rozmnożenie musi mieścić się w zakresie od 0 do 5.");
+
+            Name = name.Trim();
+            _age = age;
+            Health = health;
+            Strength = strength;
+            Initiative = initiative;
+            Agility = agility;
+            Speed = speed;
+            ReproductionChance = reproductionChance;
+
+            if (Health == 0 || Age > 100)
+                MarkDead(World.Singleton);
         }
 
         public abstract void Collision(World world, Organism other);

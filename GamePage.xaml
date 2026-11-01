@@ -21,10 +21,23 @@
                                     StrokeShape="Rectangle"
                                     StrokeThickness="2"
                                     WidthRequest="54">
-                                    <Image
-                                        HeightRequest="50"
-                                        Source="{Binding GraphicSrc}"
-                                        WidthRequest="50" />
+                                    <Grid>
+                                        <Image
+                                            HeightRequest="50"
+                                            InputTransparent="True"
+                                            Source="{Binding GraphicSrc}"
+                                            WidthRequest="50" />
+                                        <Button
+                                            BackgroundColor="Transparent"
+                                            BorderWidth="0"
+                                            CommandParameter="{Binding .}"
+                                            HeightRequest="50"
+                                            MinimumHeightRequest="0"
+                                            MinimumWidthRequest="0"
+                                            Padding="0"
+                                            WidthRequest="50"
+                                            Clicked="OnTileClicked" />
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

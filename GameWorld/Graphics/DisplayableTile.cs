@@ -21,6 +21,8 @@ namespace Virtual_world.GameWorld.Graphics
             OnPropertyChanged(nameof(GraphicSrc));
         }
 
+        public int X => Tile.X;
+        public int Y => Tile.Y;
         public string GraphicSrc => Tile.Content?.GraphicSrc ?? "none.png";
     }
 }

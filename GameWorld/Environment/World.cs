@@ -109,7 +109,7 @@ namespace Virtual_world.GameWorld.Environment
 
         public bool AddOrganism(Organism organism)
         {
-            if (organism == null)
+            if (organism == null || !organism.IsAlive)
                 return false;
 
             if (organism.X < 0 || organism.X >= Size || organism.Y < 0 || organism.Y >= Size)
