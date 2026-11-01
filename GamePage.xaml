@@ -6,30 +6,31 @@
     xmlns:wrld="clr-namespace:Virtual_world.GameWorld.Graphics"
     x:DataType="wrld:DisplayWorld">
 
-    <VerticalStackLayout Padding="30,0" Spacing="25">
-        <CollectionView
-            BackgroundColor="Gray"
-            ItemsSource="{Binding Tiles}"
-            HeightRequest="{Binding ExpectedWorldWidth}"
-            WidthRequest="{Binding ExpectedWorldWidth}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border
-                        Stroke="Black"
-                        StrokeShape="Rectangle"
-                        StrokeThickness="2">
-                        <Image
-                            HeightRequest="50"
-                            Source="{Binding GraphicSrc}"
-                            WidthRequest="50" />
-                    </Border>
+    <ScrollView
+        BackgroundColor="Gray"
+        Orientation="Both">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TileRows}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="x:Object">
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding .}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="wrld:DisplayableTile">
+                                <Border
+                                    HeightRequest="54"
+                                    Stroke="Black"
+                                    StrokeShape="Rectangle"
+                                    StrokeThickness="2"
+                                    WidthRequest="54">
+                                    <Image
+                                        HeightRequest="50"
+                                        Source="{Binding GraphicSrc}"
+                                        WidthRequest="50" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="{Binding WorldWidth}" />
-            </CollectionView.ItemsLayout>
-        </CollectionView>
-        <Button Text="Do turn" Command="{Binding DoTurnCommand}"/>
-    </VerticalStackLayout>
-
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

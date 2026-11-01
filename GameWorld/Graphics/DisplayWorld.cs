@@ -1,10 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using Virtual_world.GameWorld.Creatures;
 using Virtual_world.GameWorld.Environment;
 
 namespace Virtual_world.GameWorld.Graphics
@@ -18,27 +14,22 @@ namespace Virtual_world.GameWorld.Graphics
 
         public static DisplayWorld Singleton = new DisplayWorld();
 
-        public ObservableCollection<DisplayableTile> Tiles { get; } = new();
-        private bool Initialized = false;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(ExpectedWorldWidth))]
-        public partial int WorldWidth { get; set; }
-        public int ExpectedWorldWidth => WorldWidth * 54 + 5;
+        public ObservableCollection<ObservableCollection<DisplayableTile>> TileRows { get; } = new();
 
         public void InitializeTilesCollection()
         {
             var world = World.Singleton;
 
-            Tiles.Clear();
+            TileRows.Clear();
             for (int x = 0; x < world.Size; x++)
             {
+                var row = new ObservableCollection<DisplayableTile>();
                 for (int y = 0; y < world.Size; y++)
                 {
-                    Tiles.Add(new(world.TileSet[x, y]));
+                    row.Add(new(world.TileSet[x, y]));
                 }
+                TileRows.Add(row);
             }
-            WorldWidth = world.Size;
         }
 
         public void UpdateTiles()
@@ -49,7 +40,7 @@ namespace Virtual_world.GameWorld.Graphics
             {
                 for (int y = 0; y < world.Size; y++)
                 {
-                    Tiles[x * world.Size + y] = new(world.TileSet[x, y]);
+                    TileRows[x][y].UpdateTile(world.TileSet[x, y]);
                 }
             }
         }

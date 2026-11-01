@@ -21,7 +21,7 @@ namespace Virtual_world
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-            builder.Services.AddTransient<DisplayWorld>();
+            builder.Services.AddSingleton<DisplayWorld>();
             builder.Services.AddTransient<StartViewModel>();
 
             return builder.Build();

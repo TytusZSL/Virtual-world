@@ -9,20 +9,27 @@ namespace Virtual_world.GameWorld.Environment
 {
     public class World
     {
-        public World(int Size)
+        public World(int size) : this(size, DisplayWorld.Singleton)
         {
-            this.Size = Size;
-            TileSet = new Tile[Size, Size];
-            for (int x = 0; x < Size; x++)
+        }
+
+        public World(int size, DisplayWorld displayWorld)
+        {
+            Size = size;
+            TileSet = new Tile[size, size];
+            for (int x = 0; x < size; x++)
             {
-                for (int y = 0; y < Size; y++)
+                for (int y = 0; y < size; y++)
                 {
                     TileSet[x, y] = new Tile(x, y);
                 }
             }
-            TileSet[1, 1].Content = new Wolf(1, 1);
+            if (size > 1)
+            {
+                TileSet[1, 1].Content = new Wolf(1, 1);
+            }
             Singleton = this;
-            DisplayWorld.Singleton.InitializeTilesCollection();
+            displayWorld.InitializeTilesCollection();
         }
         public void DoTurn()
         {
