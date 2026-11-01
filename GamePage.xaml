@@ -17,7 +17,7 @@
                             <DataTemplate x:DataType="wrld:DisplayableTile">
                                 <Border
                                     HeightRequest="54"
-                                    Stroke="Black"
+                                    Stroke="{Binding BorderColor}"
                                     StrokeShape="Rectangle"
                                     StrokeThickness="2"
                                     WidthRequest="54">

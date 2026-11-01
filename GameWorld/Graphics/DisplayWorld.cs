@@ -149,16 +149,16 @@ namespace Virtual_world.GameWorld.Graphics
         public void Update()
         {
             var world = World.Singleton;
+            RefreshTrackedSelection(world);
 
             for (int x = 0; x < world.Size; x++)
             {
                 for (int y = 0; y < world.Size; y++)
                 {
-                    TileRows[x][y].UpdateTile(world.TileSet[x, y]);
+                    var isSelected = HasSelection && _selectedX == x && _selectedY == y;
+                    TileRows[x][y].UpdateTile(world.TileSet[x, y], isSelected);
                 }
             }
-
-            RefreshTrackedSelection(world);
 
             var narratorMessages = world.NarratorMessages;
             if (!ReferenceEquals(_narratorMessagesSource, narratorMessages)
@@ -221,6 +221,7 @@ namespace Virtual_world.GameWorld.Graphics
             SelectionMessage = organism is null
                 ? "Pole jest puste. Możesz dodać organizm."
                 : $"Na polu znajduje się: {organism.Name}. Możesz go edytować lub usunąć.";
+            Update();
         }
 
         [RelayCommand]
