@@ -21,7 +21,7 @@ namespace Virtual_world.GameWorld.Creatures.Animals
         public override double ReproductionChance => _reproductionChance;
         private double _reproductionChance;
 
-        public override string GraphicSrc => "Wolf.png";
+        public override string GraphicSrc => "wilk.png";
         public double SpawnRate;
         public Wolf(int X, int Y) : base(X, Y)
         {
