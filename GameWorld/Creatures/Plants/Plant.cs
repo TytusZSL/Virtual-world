@@ -35,11 +35,13 @@ namespace Virtual_world.GameWorld.Creatures
 
         public override void Collision(World world, Organism other)
         {
-            if (other is Animal)
-            {
-                MarkDead(world);
-                world.AddNarratorMessage($"{other.Name} zjadł {Name}.");
-            }
+            if (other is Animal animal)
+                ConsumeByAnimal(world, animal, 2);
+        }
+
+        protected void ConsumeByAnimal(World world, Animal animal, double healthChange)
+        {
+            animal.EatPlant(world, this, healthChange);
         }
     }
 }

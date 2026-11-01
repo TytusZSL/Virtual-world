@@ -24,6 +24,22 @@ namespace Virtual_world.GameWorld.Creatures.Animals
             base.Action();
             for (int move = 0; move < Math.Round(Speed, MidpointRounding.AwayFromZero) && IsAlive; move++)
             {
+                Animal? partner = null;
+                foreach (var tile in GetAdjacentTiles())
+                {
+                    if (tile.Content is Animal adjacentAnimal
+                        && adjacentAnimal.GetType() == GetType()
+                        && IsAdult
+                        && adjacentAnimal.IsAdult)
+                    {
+                        partner = adjacentAnimal;
+                        break;
+                    }
+                }
+
+                if (partner != null && TryReproduce(World.Singleton, partner))
+                    continue;
+
                 var targetTile = GetRandomAdjacentTile();
                 if (targetTile != null)
                     TryMoveTo(targetTile);
@@ -32,44 +48,60 @@ namespace Virtual_world.GameWorld.Creatures.Animals
 
         public override void Collision(World world, Organism other)
         {
-            if (other == null)
+            if (other == null || !IsAlive || !other.IsAlive || ReferenceEquals(this, other))
                 return;
 
-            if (other is Animal otherAnimal && other.GetType() == GetType())
+            if (other is Animal otherAnimal)
             {
-                if (!IsAdult || !otherAnimal.IsAdult || world.rngGen.NextDouble() * 5 > ReproductionChance)
-                    return;
-
-                var childTile = GetRandomFreeAdjacentTile();
-                if (childTile != null)
-                {
-                    var child = Activator.CreateInstance(GetType(), childTile.X, childTile.Y);
-                    if (child is Organism newborn)
-                    {
-                        newborn.Mutation(this, world);
-                        world.TileSet[childTile.X, childTile.Y].Content = newborn;
-                        world.AddNarratorMessage($"{Name} i {other.Name} wydali na świat potomka.");
-                    }
-                }
+                if (other.GetType() == GetType())
+                    TryReproduce(world, otherAnimal);
+                else
+                    ResolveFight(world, otherAnimal);
                 return;
             }
 
-            if (other is Plant)
-            {
-                other.MarkDead(world);
-                world.TileSet[other.X, other.Y].Content = this;
-                world.TileSet[X, Y].Content = null;
-                _x = other.X;
-                _y = other.Y;
-                this.ChangeHealth(2);
-                world.AddNarratorMessage($"{Name} zjadł {other.Name}.");
-                return;
-            }
+            if (other is Plant plant)
+                plant.Collision(world, this);
+        }
 
-            if (other is Animal enemyAnimal)
-            {
-                ResolveFight(world, enemyAnimal);
-            }
+        internal void EatPlant(World world, Plant plant, double healthChange)
+        {
+            if (!IsAlive || !plant.IsAlive)
+                return;
+
+            var plantX = plant.X;
+            var plantY = plant.Y;
+            plant.MarkDead(world);
+            world.TileSet[X, Y].Content = null;
+            world.TileSet[plantX, plantY].Content = this;
+            _x = plantX;
+            _y = plantY;
+            ChangeHealth(healthChange);
+
+            if (Health <= 0)
+                MarkDead(world);
+
+            world.AddNarratorMessage($"{Name} zjadł {plant.Name}.");
+        }
+
+        private bool TryReproduce(World world, Animal partner)
+        {
+            if (!IsAlive || !partner.IsAlive || !IsAdult || !partner.IsAdult
+                || world.rngGen.NextDouble() * 5 > ReproductionChance)
+                return false;
+
+            var childTile = GetRandomFreeAdjacentTile();
+            if (childTile == null)
+                return false;
+
+            var child = Activator.CreateInstance(GetType(), childTile.X, childTile.Y);
+            if (child is not Organism newborn)
+                return false;
+
+            newborn.Mutation(this, world);
+            childTile.Content = newborn;
+            world.AddNarratorMessage($"{Name} i {partner.Name} wydali na świat potomka.");
+            return true;
         }
 
         private void ResolveFight(World world, Animal enemy)
@@ -130,6 +162,9 @@ namespace Virtual_world.GameWorld.Creatures.Animals
                 MoveTo(target);
                 return;
             }
+
+            if (target.Content is Animal otherAnimal && otherAnimal.GetType() == GetType())
+                return;
 
             if (target.Content != null)
             {

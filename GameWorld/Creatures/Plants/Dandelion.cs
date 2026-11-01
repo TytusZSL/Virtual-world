@@ -1,4 +1,5 @@
 using System;
+using Virtual_world.GameWorld.Creatures.Animals;
 using Virtual_world.GameWorld.Environment;
 
 namespace Virtual_world.GameWorld.Creatures.Plants
@@ -50,5 +51,10 @@ namespace Virtual_world.GameWorld.Creatures.Plants
             }
         }
 
+        public override void Collision(World world, Organism other)
+        {
+            if (other is Animal animal)
+                ConsumeByAnimal(world, animal, 1);
+        }
     }
 }
