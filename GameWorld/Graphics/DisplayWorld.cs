@@ -143,6 +143,7 @@ namespace Virtual_world.GameWorld.Graphics
                 }
                 TileRows.Add(row);
             }
+            Update();
         }
 
         public void Update()
