@@ -7,40 +7,27 @@ namespace Virtual_world.GameWorld.Creatures.Animals
 {
     internal class Wolf : Animal
     {
-        public override int Strength => _strength;
-        private int _strength = 9;
-        public override int Initiative => _initiative;
-        private int _initiative = 5;
-        public override int Health => _health;
-        private int _health;
-        public override string Name => _name;
-        private string _name = "wilk";
-        public override int Dexterity => _dexterity;
-        private int _dexterity;
-        public override int Id => 1;
-        public override double ReproductionChance => _reproductionChance;
-        private double _reproductionChance;
+        public const double SpawnRate = 0.1;
 
+        private readonly int _initiative = 5;
+        private readonly int _dexterity = 0;
+
+        public override double Strength { get; protected set; }
+        public override int Initiative => _initiative;
+        public override double Health { get; protected set; }
+        public override bool IsCarnivore => true;
+        public override string Name => "wilk";
+        public override int Agility => _dexterity;
+        public override int Id => 1;
+        public override double ReproductionChance { get; protected set; }
         public override string GraphicSrc => "wilk.png";
-        public double SpawnRate;
+
         public Wolf(int X, int Y) : base(X, Y)
         {
+            Health = 36;
+            Strength = 9;
+            ReproductionChance = 0.5;
         }
-
-        public override void Action()
-        {
-            base.Action();
-            Console.WriteLine($"{X}, {Y}");
-        }
-
-        public override void Collision(World world, Organism other)
-        {
-            
-        }
-
-        public override void Mutation()
-        {
-            
-        }
+        public override void Collision(World world, Organism other) => base.Collision(world, other);
     }
 }
