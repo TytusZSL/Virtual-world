@@ -10,13 +10,14 @@ namespace Virtual_world.GameWorld.Environment
 {
     public class World
     {
-        public World(int size) : this(size, DisplayWorld.Singleton)
+        public World(int size, double mutationChance) : this(size, mutationChance, DisplayWorld.Singleton)
         {
         }
 
-        public World(int size, DisplayWorld displayWorld)
+        public World(int size, double mutationChance, DisplayWorld displayWorld)
         {
             Size = size;
+            MutationChance = mutationChance;
             TileSet = new Tile[size, size];
             for (int x = 0; x < size; x++)
             {
@@ -137,7 +138,7 @@ namespace Virtual_world.GameWorld.Environment
 
         public readonly int Size;
 
-        public static World Singleton = new World(20);
+        public static World Singleton = new World(20, 0.1);
 
         public Tile[,] TileSet;
 

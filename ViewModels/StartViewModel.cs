@@ -13,10 +13,13 @@ namespace Virtual_world.ViewModels
         [ObservableProperty]
         public partial int WorldSize { get; set; } = 20;
 
+        [ObservableProperty]
+        public partial int MutationChance { get; set; } = 10;
+
         [RelayCommand]
         public async Task StartGame()
         {
-            new World(WorldSize, displayWorld);
+            new World(WorldSize, MutationChance / 100, displayWorld);
             await Shell.Current.GoToAsync("GamePage");
         }
     }

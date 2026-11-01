@@ -9,7 +9,7 @@
     <Grid
         ColumnDefinitions="Auto, Auto, *"
         ColumnSpacing="10"
-        RowDefinitions="Auto, Auto, Auto, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto"
         RowSpacing="10">
         <Label
             Grid.Row="0"
@@ -18,7 +18,7 @@
             HorizontalOptions="Center"
             Text="Opcje gry"
             VerticalOptions="Center" />
-        <Label Grid.Row="1" Grid.Column="0">X:</Label>
+        <Label Grid.Row="1" Grid.Column="0">Wielkość świata:</Label>
         <Label
             Grid.Row="1"
             Grid.Column="1"
@@ -29,6 +29,19 @@
             Maximum="30"
             Minimum="1"
             Value="{Binding WorldSize}" />
+
+        <Label Grid.Row="2" Grid.Column="0">Szansa mutacji:</Label>
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="{Binding MutationChance, StringFormat='{0}%'}" />
+        <Slider
+            Grid.Row="2"
+            Grid.Column="2"
+            Maximum="100"
+            Minimum="0"
+            Value="{Binding MutationChance}" />
+
         <Button
             Grid.Row="3"
             Grid.Column="0"
