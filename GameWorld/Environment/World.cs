@@ -34,6 +34,9 @@ namespace Virtual_world.GameWorld.Environment
 
         public void DoTurn()
         {
+            TurnCount++;
+            AddNarratorMessage($"Tura {TurnCount}:", EntryType.World);
+
             List<Organism> organisms = new();
             foreach (var tile in TileSet)
             {
@@ -139,6 +142,8 @@ namespace Virtual_world.GameWorld.Environment
         }
 
         public readonly int Size;
+
+        private int TurnCount;
 
         public static World Singleton = new World(20, 0.1);
 
